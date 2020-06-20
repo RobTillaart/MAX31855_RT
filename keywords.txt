@@ -1,0 +1,24 @@
+# Syntax Coloring Map For MAX31855
+
+# Datatypes (KEYWORD1)
+MAX31855	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+begin	KEYWORD2
+read	KEYWORD2
+getInternal	KEYWORD2
+getTemperature	KEYWORD2
+getStatus	KEYWORD2
+shortToGND	KEYWORD2
+shortToVCC	KEYWORD2
+openCircuit	KEYWORD2
+setOffset	KEYWORD2
+getOffset	KEYWORD2
+setSeebeckCoefficient	KEYWORD2
+getSeebeckCoefficient	KEYWORD2
+lastRead	KEYWORD2
+
+# Instances (KEYWORD2)
+
+# Constants (LITERAL1)
+
