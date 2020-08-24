@@ -68,6 +68,7 @@ public:
   float   getSeebeckCoefficient() const         { return _SC; };
 
   uint32_t lastRead()                 { return _lastRead; };
+  uint32_t getRawData()               { return _rawData;};
 
 private:
   uint32_t _read();
@@ -77,6 +78,7 @@ private:
   float    _offset;
   float    _SC;
   uint32_t _lastRead;
+  uint32_t _rawData;
 
   uint8_t  _sclk;
   uint8_t  _miso;
