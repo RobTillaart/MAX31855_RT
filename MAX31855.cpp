@@ -60,7 +60,6 @@ uint8_t MAX31855::read()
   uint32_t value = _read();
 
   _lastRead = millis();
-  _rawData = value;
 
   // process status bit 0-2
   _status = value & 0x0007;
@@ -97,23 +96,23 @@ uint8_t MAX31855::read()
 // TODO optimize, how.
 uint32_t MAX31855::_read(void)
 {
-  uint32_t value = 0;
+  _rawData = 0;
 
   digitalWrite(_cs, LOW);
 
   for (int8_t i = 31; i >= 0; i--)
   {
-    value <<= 1;
+    _rawData <<= 1;
     digitalWrite(_sclk, LOW);
     // delayMicroseconds(1);  // DUE
-    if ( digitalRead(_miso) ) value++;
+    if ( digitalRead(_miso) ) _rawData++;
     digitalWrite(_sclk, HIGH);
     // delayMicroseconds(1);  // DUE
   }
 
   digitalWrite(_cs, HIGH);
 
-  return value;
+  return _rawData;
 }
 
 float MAX31855::getTemperature()
