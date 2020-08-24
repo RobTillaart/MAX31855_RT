@@ -99,6 +99,18 @@ One can adjust the values to improve the accuracy of the temperature read.
 The **getTemperature()** has implemented this algorithm, however as long
 as one does not set the SC it will use the K_TC as default.
 
+## GetRawData 
+This function allows you to get all the 32 bits raw data from the board, after the standard reading.
+Example code could be found in the examples folder.
+
+```cpp
+thermocouple.read();              
+value=thermocouple.getRawData();  // Read the raw Data value from the module
+```
+## Pull Up Resistor 
+To check if the board is connected or not, you can add a 1k pull-up resistor over the MISO pin (PIN 12).
+If no board is connected you can find 31 HIGH bit, so you can discriminate the error.
+
 **NOTE:** 
 The support for other thermocouples is experimental **use at your own risk**.
 
