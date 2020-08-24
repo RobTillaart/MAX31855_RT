@@ -14,12 +14,13 @@
 #define MAX31855_VERSION "0.2.0"
 
 // STATE constants returnd by read()
-#define STATUS_OK               0x00
-#define STATUS_OPEN_CIRCUIT     0x01
-#define STATUS_SHORT_TO_GND     0x02
-#define STATUS_SHORT_TO_VCC     0x04
-#define STATUS_ERROR            0x07
-#define STATUS_NOREAD           0x80
+#define STATUS_OK                     0x00
+#define STATUS_OPEN_CIRCUIT           0x01
+#define STATUS_SHORT_TO_GND           0x02
+#define STATUS_SHORT_TO_VCC           0x04
+#define STATUS_ERROR                  0x07
+#define STATUS_NOREAD                 0x80
+#define STATUS_NO_COMMUNICATION       0x81
 
 //  Thermocouples working is based upon Seebeck effect.
 //  Different TC have a different Seebeck Coefficient  (µV/°C)

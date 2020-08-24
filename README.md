@@ -18,15 +18,18 @@ It returns the status of the read which is a value between 0..7
 
 Status from **read()**
 
-| Bit set | Description |
-|:----|:----|
-| None | OK |
-| 0 | thermocouple open circuit |
-| 1 | thermocouple short to GND |
-| 2 | thermocouple short to VCC |
+| value | Description | Action |
+|:----:|:----|:----|
+| 0 | OK | - |
+| 1 | Thermocouple open circuit | check wiring |
+| 2 | Thermocouple short to GND | check wiring |
+| 4 | Thermocouple short to VCC | check wiring |
+| 7 | Generic error | |
+| 128 | No read done yet | check wiring |
+| 129 | No communication | check wiring |
 
 The function **getStatus()** returns the same status value. There are three functions
-to check the individual error conditions.
+to check individual error conditions.
 
 After a **tc.read()** you can get the temperature with **tc.getTemperature()** 
 and **tc.getInternal()** for the temperature of the chip / board itself.
