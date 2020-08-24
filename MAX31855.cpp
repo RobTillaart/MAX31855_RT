@@ -60,6 +60,7 @@ uint8_t MAX31855::read()
   uint32_t value = _read();
 
   _lastRead = millis();
+  _rawData = value;
 
   // process status bit 0-2
   _status = value & 0x0007;
