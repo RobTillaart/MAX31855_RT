@@ -108,7 +108,7 @@ thermocouple.read();
 value=thermocouple.getRawData();  // Read the raw Data value from the module
 ```
 ## Pull Up Resistor 
-To check if the board is connected or not, you can add a 1k pull-up resistor over the MISO pin (MISO pin can be different fromo each board, please refer to your board datasheet).
+To check if the board is connected or not, you can add a 1k pull-up resistor over the MISO pin (MISO pin can be different from each board, please refer to your board datasheet).
 If no board is connected you can find 31 HIGH bit, so you can discriminate the error.
 You can use a simple code to detect connection error board:
 
