@@ -7,6 +7,7 @@
 //     URL: https://github.com/RobTillaart/MAX31855_RT
 //
 // HISTORY:
+// 
 // 0.2.0  2020-06-20 #pragma once; major refactor; removed pre 1.0 support; fix offset
 // 0.1.10 2019-07-31 add 3 inline functions to test errors + demo sketch
 // 0.1.9  2017-07-27 reverted double -> float (issue33)
@@ -58,6 +59,13 @@ uint8_t MAX31855::read()
   // 18 - 30  TEMPERATURE (RAW)
   //      31  SIGN
   uint32_t value = _read();
+  
+  if (value == 0xFFFFFFFF)
+  {
+    // bit 3 and bit 17 should always be 0 - P10 datasheet
+    _status = STATUS_NO_COMMUNICATION;
+    return _status;
+  }
 
   _lastRead = millis();
 
