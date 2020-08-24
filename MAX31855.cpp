@@ -132,3 +132,4 @@ float MAX31855::getTemperature()
 }
 
 // -- END OF FILE --
+
