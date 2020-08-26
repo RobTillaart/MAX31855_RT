@@ -2,7 +2,7 @@
 //
 //    FILE: MAX31855.h
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.2.0
+// VERSION: 0.2.1
 // PURPOSE: Arduino library for MAX31855 chip for K type thermocouple
 //    DATE: 2014-01-01
 //     URL: https://github.com/RobTillaart/MAX31855_RT
@@ -11,7 +11,8 @@
 
 #include "Arduino.h"
 
-#define MAX31855_VERSION "0.2.0"
+#define MAX31855_VERSION           "0.2.1"
+
 
 // STATE constants returnd by read()
 #define STATUS_OK                     0x00
@@ -22,6 +23,7 @@
 #define STATUS_NOREAD                 0x80
 #define STATUS_NO_COMMUNICATION       0x81
 
+
 //  Thermocouples working is based upon Seebeck effect.
 //  Different TC have a different Seebeck Coefficient  (µV/°C)
 //  See http://www.analog.com/library/analogDialogue/archives/44-10/thermocouple.html
@@ -29,9 +31,10 @@
 //  As the MAX31855 is designed for K type sensors, one can calculate
 //  the factor needed to convert other sensors measurements. 
 //  NOTE: this is only a linear approximation.
-
+//
 //  Seebeck Coefficients (sensitivity) from the MAX31855 datasheet page 8
 //  to be used in setSeebeckCoefficient()
+//
 //      TYPE    COEFFICIENT
 #define E_TC    76.373
 #define J_TC    57.953
@@ -41,9 +44,11 @@
 #define S_TC    9.587
 #define T_TC    52.18
 
+
 class MAX31855
 {
 public:
+
   MAX31855(uint8_t SCLK, uint8_t CS, uint8_t MISO);
   void begin();
 
@@ -53,11 +58,13 @@ public:
   float   getInternal(void) const     { return _internal; }
   float   getTemperature(void);
 
-  uint8_t getStatus(void) const       { return _status; };
-  // next 3 applies to last read
-  inline  bool shortToGND()  { return (_status & STATUS_SHORT_TO_GND) != 0; };
-  inline  bool shortToVCC()  { return (_status & STATUS_SHORT_TO_VCC) != 0; };
-  inline  bool openCircuit() { return (_status & STATUS_OPEN_CIRCUIT) != 0; };
+  uint8_t getStatus(void) const  { return _status; };
+  inline  bool openCircuit()     { return _status == STATUS_OPEN_CIRCUIT; };
+  inline  bool shortToGND()      { return _status == STATUS_SHORT_TO_GND; };
+  inline  bool shortToVCC()      { return _status == STATUS_SHORT_TO_VCC; };
+  inline  bool genericError()    { return _status == STATUS_ERROR; };
+  inline  bool noRead()          { return _status == STATUS_NOREAD; };
+  inline  bool noCommunication() { return _status == STATUS_NO_COMMUNICATION; };
 
   // use offset to callibrate the TC.
   void    setOffset(const float  t)   { _offset = t; };
@@ -68,8 +75,8 @@ public:
   void    setSeebeckCoefficient(const float SC) { _SC = SC; };
   float   getSeebeckCoefficient() const         { return _SC; };
 
-  uint32_t lastRead()                 { return _lastRead; };
-  uint32_t getRawData()               { return _rawData;};
+  uint32_t lastRead()            { return _lastRead; };
+  uint32_t getRawData()          { return _rawData;};
 
 private:
   uint32_t _read();
