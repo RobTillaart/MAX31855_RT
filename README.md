@@ -14,6 +14,20 @@ For every type of TC there exist an MAX31855 variant, this library is primary
 developed for the K-type sensor. However it has experimental support for all
 other types of TC's. See details below.
 
+Library tested with breakout board
+
+```
+     +---------+
+ Vin | o       |
+ 3Vo | o       |
+ GND | o     O | Thermocouple
+  D0 | o     O | Thermocouple
+  CS | o       |
+ CLK | o       |
+     +---------+
+
+```
+
 ## Interface
 
 To make a temperature reading call **tc.read()**.

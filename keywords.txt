@@ -17,7 +17,7 @@ shortToVCC	KEYWORD2
 openCircuit	KEYWORD2
 genericError	KEYWORD2
 noRead	KEYWORD2
-noCOmmunication	KEYWORD2
+noCommunication	KEYWORD2
 
 setOffset	KEYWORD2
 getOffset	KEYWORD2

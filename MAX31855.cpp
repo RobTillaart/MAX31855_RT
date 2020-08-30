@@ -1,13 +1,14 @@
 //
 //    FILE: MAX31855.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.2.1
+// VERSION: 0.2.2
 // PURPOSE: Arduino library for MAX31855 chip for K type thermocouple
 //    DATE: 2014-01-01
 //     URL: https://github.com/RobTillaart/MAX31855_RT
 //
 // HISTORY:
-// 
+//
+// 0.2.2  2020-08-30 fix#9 + fix failing examples + minor refactor
 // 0.2.1  2020-08-26 read rawData and STATUS_NO_COMMUNICATION recognition (thanks to FabioBrondo)
 // 0.2.0  2020-06-20 #pragma once; major refactor; removed pre 1.0 support; fix offset
 // 0.1.10 2019-07-31 add 3 inline functions to test errors + demo sketch
@@ -62,7 +63,7 @@ uint8_t MAX31855::read()
   // 18 - 30  TEMPERATURE (RAW)
   //      31  SIGN
   uint32_t value = _read();
-  
+
   if (value == 0xFFFFFFFF)  // needs a pull up on miso pin to work properly!
   {
     // bit 3 and bit 17 should always be 0 - P10 datasheet
@@ -74,18 +75,22 @@ uint8_t MAX31855::read()
 
   // process status bit 0-2
   _status = value & 0x0007;
-  // if (_status) return _status;
+  if (_status != STATUS_OK)
+  {
+    return _status;
+  }
 
   value >>= 3;
 
-  // reserved bit 3, allways 0
+  // reserved bit 3, always 0
   value >>= 1;
 
   // process internal bit 4-15
   _internal = (value & 0x07FF) * 0.0625;
-  if (value & 0x0800)
+  // negative flag set ?
+  if (value & 0x0800) 
   {
-    _internal = -128 + _internal;  // fix neg temp
+    _internal = -128 + _internal;
   }
   value >>= 12;
 
@@ -93,14 +98,15 @@ uint8_t MAX31855::read()
   // _fault = value & 0x01;
   value >>= 1;
 
-  // reserved bit 17, allways 0
+  // reserved bit 17, always 0
   value >>= 1;
 
   // process temperature bit 18-30 + sign bit = 31
   _temperature = (value & 0x1FFF) * 0.25;
-  if (value & 0x2000) // negative flag
+  // negative flag set ?
+  if (value & 0x2000)
   {
-    _temperature = -2048 + _temperature;  // calculate neg temp
+    _temperature = -2048 + _temperature;
   }
   return _status;
 }
@@ -140,7 +146,7 @@ float MAX31855::getTemperature()
   float Vout = K_TC * (_temperature - _internal);  // PAGE 8 datasheet
 
   // 2: from Voltage to corrected temperature using the Seebeck Coefficient
-  float _temp = Vout / _SC + _internal; 
+  float _temp = Vout / _SC + _internal;
   return _temp;
 }
 

@@ -2,16 +2,26 @@
 //
 //    FILE: MAX31855.h
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.2.1
+// VERSION: 0.2.2
 // PURPOSE: Arduino library for MAX31855 chip for K type thermocouple
 //    DATE: 2014-01-01
 //     URL: https://github.com/RobTillaart/MAX31855_RT
 //          http://forum.arduino.cc/index.php?topic=208061
 //
+// Bbreakout board
+//
+//     +---------+
+// Vin | o       |
+// 3Vo | o       |
+// GND | o     O | Thermocouple
+//  D0 | o     O | Thermocouple
+//  CS | o       |
+// CLK | o       |
+//     +---------+
 
 #include "Arduino.h"
 
-#define MAX31855_VERSION           "0.2.1"
+#define MAX31855_VERSION           "0.2.2"
 
 
 // STATE constants returnd by read()
@@ -29,7 +39,7 @@
 //  See http://www.analog.com/library/analogDialogue/archives/44-10/thermocouple.html
 //
 //  As the MAX31855 is designed for K type sensors, one can calculate
-//  the factor needed to convert other sensors measurements. 
+//  the factor needed to convert other sensors measurements.
 //  NOTE: this is only a linear approximation.
 //
 //  Seebeck Coefficients (sensitivity) from the MAX31855 datasheet page 8
@@ -55,7 +65,7 @@ public:
   // returns state - bitfield: 0 = STATUS_OK
   uint8_t read();
 
-  float   getInternal(void) const     { return _internal; }
+  float   getInternal(void) const { return _internal; }
   float   getTemperature(void);
 
   uint8_t getStatus(void) const  { return _status; };
@@ -71,7 +81,7 @@ public:
   float   getOffset() const           { return _offset; };
 
   //  set the above E_TC (etc) Seebrecht Coefficients
-  //  one can also set your own optimized values. 
+  //  one can also set your own optimized values.
   void    setSeebeckCoefficient(const float SC) { _SC = SC; };
   float   getSeebeckCoefficient() const         { return _SC; };
 

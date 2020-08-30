@@ -1,7 +1,7 @@
 //
 //    FILE: max31855_demo5.ino
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.2
+// VERSION: 0.1.4
 // PURPOSE: thermocouple lib demo application
 //    DATE: 2014-01-02
 //     URL: https://github.com/RobTillaart/MAX31855_RT
@@ -28,14 +28,14 @@ void setup()
   Serial.print("  temp before:\t");
   Serial.println(t1, 2);
 
-  float o = tc.getOffset();
+  float offset = tc.getOffset();
   Serial.print("offset before:\t");
-  Serial.println(o, 2);
+  Serial.println(offset, 2);
 
   tc.setOffset(3.14);
-  o = tc.getOffset();
+  offset = tc.getOffset();
   Serial.print(" offset after:\t");
-  Serial.println(o, 2);
+  Serial.println(offset, 2);
 
   tc.read();
   float t2 = tc.getTemperature();
@@ -51,3 +51,5 @@ void setup()
 void loop() 
 {
 }
+
+// -- END OF FILE --

@@ -1,7 +1,7 @@
 //
 //    FILE: max31855_array.ino
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 // PURPOSE: demo of array of thermocouples
 //    DATE: 2020-08-26
 //     URL: https://github.com/RobTillaart/MAX31855_RT
@@ -11,6 +11,7 @@
 
 #include "MAX31855.h"
 
+// note: pins are slightly different than other examples!
 const int dataPin  = 7;
 const int clockPin = 6;
 
@@ -40,7 +41,7 @@ void setup()
 
 void loop()
 {
-  Serial.print("Time:\t");
+  Serial.print("\tTime:\t");
   Serial.println(millis());
 
   for (int i = 0; i < sensorCount; i++)
