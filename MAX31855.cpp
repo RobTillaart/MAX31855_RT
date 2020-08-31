@@ -1,13 +1,14 @@
 //
 //    FILE: MAX31855.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.2.2
+// VERSION: 0.2.3
 // PURPOSE: Arduino library for MAX31855 chip for K type thermocouple
 //    DATE: 2014-01-01
 //     URL: https://github.com/RobTillaart/MAX31855_RT
 //
 // HISTORY:
 //
+// 0.2.3  2020-08-30 fix #8 support hardware SPI + example
 // 0.2.2  2020-08-30 fix#9 + fix failing examples + minor refactor
 // 0.2.1  2020-08-26 read rawData and STATUS_NO_COMMUNICATION recognition (thanks to FabioBrondo)
 // 0.2.0  2020-06-20 #pragma once; major refactor; removed pre 1.0 support; fix offset
@@ -28,11 +29,25 @@
 #include "MAX31855.h"
 
 
+MAX31855::MAX31855(const uint8_t cs)
+{
+  _cs = cs;
+  _hwSPI = true;
+
+  _offset = 0;
+  _SC = K_TC;
+  _status = STATUS_NOREAD;
+  _temperature = -999;
+  _internal = -999;
+}
+
 MAX31855::MAX31855(const uint8_t sclk, const uint8_t cs, const uint8_t miso)
 {
   _sclk = sclk;
   _cs = cs;
   _miso = miso;
+  _hwSPI = false;
+
   _offset = 0;
   _SC = K_TC;
   _status = STATUS_NOREAD;
@@ -44,9 +59,16 @@ void MAX31855::begin()
 {
   pinMode(_cs, OUTPUT);
   digitalWrite(_cs, HIGH);
-
-  pinMode(_sclk, OUTPUT);
-  pinMode(_miso, INPUT);
+  if (_hwSPI)
+  {
+    SPI.begin();
+    delay(1);
+  }
+  else
+  {
+    pinMode(_sclk, OUTPUT);
+    pinMode(_miso, INPUT);
+  }
 }
 
 
@@ -115,21 +137,30 @@ uint8_t MAX31855::read()
 uint32_t MAX31855::_read(void)
 {
   _rawData = 0;
-
   digitalWrite(_cs, LOW);
-
-  for (int8_t i = 31; i >= 0; i--)
+  if (_hwSPI)
   {
-    _rawData <<= 1;
-    digitalWrite(_sclk, LOW);
-    // delayMicroseconds(1);  // DUE
-    if ( digitalRead(_miso) ) _rawData++;
-    digitalWrite(_sclk, HIGH);
-    // delayMicroseconds(1);  // DUE
+    SPI.beginTransaction(SPISettings(16000000, MSBFIRST, SPI_MODE0));
+    for (uint8_t i = 0; i < 4; i++)
+    {
+      _rawData <<= 8;
+      _rawData += SPI.transfer(0);
+    }
+    SPI.endTransaction();
   }
-
+  else
+  {
+    for (int8_t i = 31; i >= 0; i--)
+    {
+      _rawData <<= 1;
+      digitalWrite(_sclk, LOW);
+      // delayMicroseconds(1);  // DUE
+      if ( digitalRead(_miso) ) _rawData++;
+      digitalWrite(_sclk, HIGH);
+      // delayMicroseconds(1);  // DUE
+    }
+  }
   digitalWrite(_cs, HIGH);
-
   return _rawData;
 }
 

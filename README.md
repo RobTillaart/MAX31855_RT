@@ -28,6 +28,28 @@ Library tested with breakout board
 
 ```
 
+## Hardware SPI vs software SPI
+
+Default pin connections (ESP32 has more options)
+
+ | HW SPI   |  UNO  |  ESP32  |
+ |:---------|:-----:|:-------:|
+ | CLOCKPIN |   13  |   18    |
+ | MISO     |   12  |   19    |
+ | MOSI     |   11  |   23    |
+
+Performance read() function, timing in us.
+
+| mode | clock | timng UNO |
+|:----|----:|----:|
+| HWSPI | 16000000 | ~68  |
+| HWSPI |  4000000 | ~72  |
+| HWSPI |  1000000 | ~100 |
+| HWSPI |   500000 | ~128 |
+| SWSPI | bitbang  | ~500 |
+
+
+
 ## Interface
 
 To make a temperature reading call **tc.read()**.
