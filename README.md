@@ -1,3 +1,8 @@
+
+[![Arduino CI](https://github.com/RobTillaart/MAX31855_RT/workflows/Arduino%20CI/badge.svg)](https://github.com/marketplace/actions/arduino_ci)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/MAX31855_RT/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/RobTillaart/MAX31855_RT.svg?maxAge=3600)](https://github.com/RobTillaart/MAX31855_RT/releases)
+
 # MAX31855_RT
 
 Arduino library for MAX31855 chip for K type thermocouple

@@ -1,28 +1,28 @@
 //
 //    FILE: MAX31855.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.2.3
+// VERSION: 0.2.4
 // PURPOSE: Arduino library for MAX31855 chip for K type thermocouple
 //    DATE: 2014-01-01
 //     URL: https://github.com/RobTillaart/MAX31855_RT
 //
-// HISTORY:
-//
-// 0.2.3  2020-08-30 fix #8 support hardware SPI + example
-// 0.2.2  2020-08-30 fix#9 + fix failing examples + minor refactor
-// 0.2.1  2020-08-26 read rawData and STATUS_NO_COMMUNICATION recognition (thanks to FabioBrondo)
-// 0.2.0  2020-06-20 #pragma once; major refactor; removed pre 1.0 support; fix offset
-// 0.1.10 2019-07-31 add 3 inline functions to test errors + demo sketch
-// 0.1.9  2017-07-27 reverted double -> float (issue33)
-// 0.1.08 2015-12-06 replaced all temperature calls with one TCfactor + update demos.
-// 0.1.07 2015-12-06 updated TC factors from the MAX31855 datasheet
-// 0.1.06 2015-12-05 added support for other types of TC's (experimental)
-// 0.1.05 2015-07-12 refactor robust constructor
-// 0.1.04 2015-03-09 replaced float -> double (ARM support)
-// 0.1.03 2014-01-24 fixed negative temperature
-// 0.1.02 2014-01-03 added offset
-// 0.1.01 2014-01-02 refactored speed/performance
-// 0.1.00 2014-01-02 initial version.
+//  HISTORY:
+//  0.2.4  2020-12-30  arduinoCI, unit test
+//  0.2.3  2020-08-30  fix #8 support hardware SPI + example
+//  0.2.2  2020-08-30  fix#9 + fix failing examples + minor refactor
+//  0.2.1  2020-08-26  read rawData and STATUS_NO_COMMUNICATION recognition (thanks to FabioBrondo)
+//  0.2.0  2020-06-20  #pragma once; major refactor; removed pre 1.0 support; fix offset
+//  0.1.10 2019-07-31  add 3 inline functions to test errors + demo sketch
+//  0.1.9  2017-07-27  reverted double -> float (issue33)
+//  0.1.08 2015-12-06  replaced all temperature calls with one TCfactor + update demos.
+//  0.1.07 2015-12-06  updated TC factors from the MAX31855 datasheet
+//  0.1.06 2015-12-05  added support for other types of TC's (experimental)
+//  0.1.05 2015-07-12  refactor robust constructor
+//  0.1.04 2015-03-09  replaced float -> double (ARM support)
+//  0.1.03 2014-01-24  fixed negative temperature
+//  0.1.02 2014-01-03  added offset
+//  0.1.01 2014-01-02  refactored speed/performance
+//  0.1.00 2014-01-02  initial version.
 //
 
 
@@ -31,28 +31,30 @@
 
 MAX31855::MAX31855(const uint8_t cs)
 {
-  _cs = cs;
-  _hwSPI = true;
+  _cs          = cs;
+  _hwSPI       = true;
 
-  _offset = 0;
-  _SC = K_TC;
-  _status = STATUS_NOREAD;
-  _temperature = -999;
-  _internal = -999;
+  _offset      = 0;
+  _SC          = K_TC;
+  _status      = STATUS_NOREAD;
+  _temperature = MAX31855_NO_TEMPERATURE;
+  _internal    = MAX31855_NO_TEMPERATURE;
+  _rawData     = 0;
 }
 
 MAX31855::MAX31855(const uint8_t sclk, const uint8_t cs, const uint8_t miso)
 {
-  _sclk = sclk;
-  _cs = cs;
-  _miso = miso;
-  _hwSPI = false;
+  _sclk        = sclk;
+  _cs          = cs;
+  _miso        = miso;
+  _hwSPI       = false;
 
-  _offset = 0;
-  _SC = K_TC;
-  _status = STATUS_NOREAD;
-  _temperature = -999;
-  _internal = -999;
+  _offset      = 0;
+  _SC          = K_TC;
+  _status      = STATUS_NOREAD;
+  _temperature = MAX31855_NO_TEMPERATURE;
+  _internal    = MAX31855_NO_TEMPERATURE;
+  _rawData     = 0;
 }
 
 void MAX31855::begin()
