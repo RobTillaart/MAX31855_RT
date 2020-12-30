@@ -62,7 +62,7 @@ unittest(test_new_operator)
 }
 */
 
-unittest(test_constructor)
+unittest(test_all)
 {
   fprintf(stderr, "VERSION: %s\n", MAX31855_VERSION);
   
@@ -72,32 +72,38 @@ unittest(test_constructor)
 
   MAX31855 tc(clPin, csPin, doPin);
   tc.begin();
-  /*
-    float   getInternal(void) const { return _internal; }
-  float   getTemperature(void);
 
-  uint8_t getStatus(void) const  { return _status; };
-  inline  bool openCircuit()     { return _status == STATUS_OPEN_CIRCUIT; };
-  inline  bool shortToGND()      { return _status == STATUS_SHORT_TO_GND; };
-  inline  bool shortToVCC()      { return _status == STATUS_SHORT_TO_VCC; };
-  inline  bool genericError()    { return _status == STATUS_ERROR; };
-  inline  bool noRead()          { return _status == STATUS_NOREAD; };
-  inline  bool noCommunication() { return _status == STATUS_NO_COMMUNICATION; };
+  fprintf(stderr, "Status...\n");
+  assertEqual(0, tc.getStatus());
+  assertEqual(0, tc.lastRead());
+  assertEqual(0, tc.getRawData());
+  assertFalse(tc.openCircuit());
+  assertFalse(tc.shortToGND());
+  assertFalse(tc.shortToVCC());
+  assertFalse(tc.genericError());
+  assertFalse(tc.noRead());
+  assertFalse(tc.noCommunication());
 
-  // use offset to callibrate the TC.
-  void    setOffset(const float  t)   { _offset = t; };
-  float   getOffset() const           { return _offset; };
+  fprintf(stderr, "Temperature...\n");
+  assertEqualFloat(0, tc.getInternal(), 0.001);
+  assertEqualFloat(0, tc.getTemperature(), 0.001);
 
-  //  set the above E_TC (etc) Seebrecht Coefficients
-  //  one can also set your own optimized values.
-  void    setSeebeckCoefficient(const float SC) { _SC = SC; };
-  float   getSeebeckCoefficient() const         { return _SC; };
+  fprintf(stderr, "Offset...\n");
+  for (int of = 0; of < 10; of++)
+  {
+    tc.setOffset(of * 0.1);
+    fprintf(stderr, "%f\t", of * 0.1);
+    assertEqualFloat(of * 0.1, tc.getOffset(), 0.001);
+  }
 
-  uint32_t lastRead()            { return _lastRead; };
-  uint32_t getRawData()          { return _rawData;};
-  
-  */
-  assertEqual(1, 1);
+  fprintf(stderr, "SeebeckCoefficient...\n");
+  for (float sbc = 9; sbc < 100; sbc += 12.345)  // non existant still good for test.
+  {
+    tc.setSeebeckCoefficient(sbc);
+    fprintf(stderr, "%f\t", sbc);
+    assertEqualFloat(sbc, tc.getSeebeckCoefficient(), 0.001);
+  }
+
 }
 
 unittest_main()
