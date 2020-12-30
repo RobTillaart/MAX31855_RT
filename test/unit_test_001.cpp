@@ -74,7 +74,7 @@ unittest(test_all)
   tc.begin();
 
   fprintf(stderr, "Status...\n");
-  assertEqual(0, (int)tc.getStatus());
+  assertEqual(STATUS_NOREAD, (int)tc.getStatus());
   assertEqual(0, tc.lastRead());
   assertEqual(0, tc.getRawData());
   assertFalse(tc.openCircuit());
