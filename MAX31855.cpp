@@ -37,8 +37,9 @@ MAX31855::MAX31855(const uint8_t cs)
   _offset      = 0;
   _SC          = K_TC;
   _status      = STATUS_NOREAD;
-  _temperature = -999;
-  _internal    = -999;
+  _temperature = MAX31855_NO_TEMPERATURE;
+  _internal    = MAX31855_NO_TEMPERATURE;
+  _rawData     = 0;
 }
 
 MAX31855::MAX31855(const uint8_t sclk, const uint8_t cs, const uint8_t miso)
@@ -51,8 +52,9 @@ MAX31855::MAX31855(const uint8_t sclk, const uint8_t cs, const uint8_t miso)
   _offset      = 0;
   _SC          = K_TC;
   _status      = STATUS_NOREAD;
-  _temperature = -999;
-  _internal    = -999;
+  _temperature = MAX31855_NO_TEMPERATURE;
+  _internal    = MAX31855_NO_TEMPERATURE;
+  _rawData     = 0;
 }
 
 void MAX31855::begin()

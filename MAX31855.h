@@ -24,6 +24,7 @@
 
 #define MAX31855_VERSION           "0.2.4"
 
+#define MAX31855_NO_TEMPERATURE       -999
 
 // STATE constants returnd by read()
 #define STATUS_OK                     0x00

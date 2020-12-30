@@ -74,19 +74,19 @@ unittest(test_all)
   tc.begin();
 
   fprintf(stderr, "Status...\n");
-  assertEqual(0, tc.getStatus());
+  assertEqual(0, (int)tc.getStatus());
   assertEqual(0, tc.lastRead());
   assertEqual(0, tc.getRawData());
   assertFalse(tc.openCircuit());
   assertFalse(tc.shortToGND());
   assertFalse(tc.shortToVCC());
   assertFalse(tc.genericError());
-  assertFalse(tc.noRead());
   assertFalse(tc.noCommunication());
+  assertTrue(tc.noRead());
 
   fprintf(stderr, "Temperature...\n");
-  assertEqualFloat(0, tc.getInternal(), 0.001);
-  assertEqualFloat(0, tc.getTemperature(), 0.001);
+  assertEqualFloat(MAX31855_NO_TEMPERATURE, tc.getInternal(), 0.001);
+  assertEqualFloat(MAX31855_NO_TEMPERATURE, tc.getTemperature(), 0.001);
 
   fprintf(stderr, "Offset...\n");
   for (int of = 0; of < 10; of++)
