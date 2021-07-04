@@ -43,15 +43,18 @@ Default pin connections (ESP32 has more options)
  | MISO     |   12  |   19    |
  | MOSI     |   11  |   23    |
 
-Performance read() function, timing in us.
 
-| mode  | clock    | timng UNO |
-|:------|---------:|----------:|
-| HWSPI | 16000000 |   ~68     |
-| HWSPI |  4000000 |   ~72     |
-| HWSPI |  1000000 |   ~100    |
-| HWSPI |   500000 |   ~128    |
-| SWSPI | bitbang  |   ~500    |
+
+Performance read() function, timing in us.  (ESP32 @240MHz)
+
+| mode  | clock    | timing UNO | timing ESP32 |
+|:------|---------:|-----------:|-------------:|
+| HWSPI | 32000000 |     ni     |      ~15     |
+| HWSPI | 16000000 |    ~68     |      ~16     |
+| HWSPI |  4000000 |    ~72     |      ~23     |
+| HWSPI |  1000000 |    ~100    |      ~51     |
+| HWSPI |   500000 |    ~128    |      ~89     |
+| SWSPI | bit bang |    ~500    |      ~17 (!) |
 
 
 

@@ -47,7 +47,7 @@ void loop ()
   Serial.println();
 
   Serial.print("TMP:\t");
-  Serial.println(thermocouple.getTemperature());
+  Serial.println(thermocouple.getTemperature(), 3);
 
   delay(100);
 }

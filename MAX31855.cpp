@@ -146,7 +146,7 @@ uint32_t MAX31855::_read(void)
   if (_hwSPI)
   {
     SPI.beginTransaction(SPISettings(16000000, MSBFIRST, SPI_MODE0));
-    digitalWrite(_cs, LOW);
+    digitalWrite(_cs, LOW);         // must be after SPI.beginTransaction() - see #14 STM32
     for (uint8_t i = 0; i < 4; i++)
     {
       _rawData <<= 8;
