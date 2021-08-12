@@ -91,9 +91,9 @@ public:
   //  set the above E_TC or other Seebeck Coefficients
   //  one can also set your own optimized values.
   void     setSeebeckCoefficient(const float SC) { _SeebeckC = SC; };
-  float    getSeebeckCoefficient() const         { return _SeeBeckC; };
+  float    getSeebeckCoefficient() const         { return _SeebeckC; };
 
-  uint32_t lastRead()    { return _lastRead; };
+  uint32_t lastRead()    { return _lastTimeRead; };
   uint32_t getRawData()  { return _rawData;};
 
   //       speed in Hz
@@ -120,7 +120,7 @@ private:
   float    _temperature;
   float    _offset;
   float    _SeebeckC;
-  uint32_t _lastRead;
+  uint32_t _lastTimeRead;
   uint32_t _rawData;
   bool     _hwSPI;
 

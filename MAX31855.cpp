@@ -144,7 +144,7 @@ uint8_t MAX31855::read()
     return _status;
   }
 
-  _lastRead = millis();
+  _lastTimeRead = millis();
 
   // process status bit 0-2
   _status = value & 0x0007;
