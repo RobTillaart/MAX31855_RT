@@ -35,15 +35,7 @@
 
 MAX31855::MAX31855(const uint8_t select)
 {
-  _select      = select;
-  _hwSPI       = true;
-
-  _offset      = 0;
-  _SeebeckC    = K_TC;
-  _status      = STATUS_NOREAD;
-  _temperature = MAX31855_NO_TEMPERATURE;
-  _internal    = MAX31855_NO_TEMPERATURE;
-  _rawData     = 0;
+  MAX31855(-1, select, -1);
 }
 
 
@@ -52,14 +44,15 @@ MAX31855::MAX31855(const uint8_t clock, const uint8_t select, const uint8_t miso
   _clock       = clock;
   _select      = select;
   _miso        = miso;
-  _hwSPI       = false;
+  _hwSPI       = (clock == -1);
 
-  _offset      = 0;
-  _SeebeckC    = K_TC;
-  _status      = STATUS_NOREAD;
-  _temperature = MAX31855_NO_TEMPERATURE;
-  _internal    = MAX31855_NO_TEMPERATURE;
-  _rawData     = 0;
+  _lastTimeRead = 0
+  _offset       = 0;
+  _SeebeckC     = K_TC;
+  _status       = STATUS_NOREAD;
+  _temperature  = MAX31855_NO_TEMPERATURE;
+  _internal     = MAX31855_NO_TEMPERATURE;
+  _rawData      = 0;
 }
 
 
@@ -228,8 +221,9 @@ float MAX31855::getTemperature()
   if (_SeebeckC == K_TC) return _temperature + _offset;
 
   // EXPERIMENTAL OTHER THERMOCOUPLES
+  // to be tested
   // in practice this works also for K_TC but is way slower..
-  // 1: reverse calculate the Voltage measured
+  // 1: reverse calculate the Voltage measured  (is this correct?)
   float Vout = K_TC * (_temperature - _internal);  // PAGE 8 datasheet
 
   // 2: from Voltage to corrected temperature using the Seebeck Coefficient

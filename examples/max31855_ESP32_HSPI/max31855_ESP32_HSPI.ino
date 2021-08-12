@@ -7,6 +7,9 @@
 //     URL: https://github.com/RobTillaart/MAX31855_RT
 //
 
+// NOTE:
+// one might to need to disconnect pin 12 during upload of the code
+// when HSPI is used.
 
 #include "MAX31855.h"
 
