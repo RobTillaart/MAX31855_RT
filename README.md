@@ -229,6 +229,8 @@ See examples
 
 ## Experimental part (to be tested)
 
+(to be tested)
+
 **NOTE:** 
 The support for other thermocouples is experimental **use at your own risk**.
 
@@ -270,7 +272,4 @@ One can adjust the values to improve the accuracy of the temperature read.
 The **float getTemperature()** has implemented this algorithm, however as long
 as one does not set the Seebeck Coefficient it will use the K_TC as default.
 
-In theory one could use modified values for the Seebeck Coeffients in combination
-with an appropriate offset so **getTemperature()** would return temperatures Fahrenheit.
-This is not tested.
 

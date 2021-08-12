@@ -233,7 +233,7 @@ float MAX31855::getTemperature()
   float Vout = K_TC * (_temperature - _internal);  // PAGE 8 datasheet
 
   // 2: from Voltage to corrected temperature using the Seebeck Coefficient
-  float _temp = Vout / _SeebeckC + _internal;
+  float _temp = Vout / _SeebeckC + _internal + _offset;
   return _temp;
 }
 
