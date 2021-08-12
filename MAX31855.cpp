@@ -46,7 +46,7 @@ MAX31855::MAX31855(const uint8_t clock, const uint8_t select, const uint8_t miso
   _miso        = miso;
   _hwSPI       = (clock == 255);
 
-  _lastTimeRead = 0
+  _lastTimeRead = 0;
   _offset       = 0;
   _SeebeckC     = K_TC;
   _status       = STATUS_NOREAD;
