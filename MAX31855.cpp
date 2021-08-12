@@ -35,7 +35,7 @@
 
 MAX31855::MAX31855(const uint8_t select)
 {
-  MAX31855(-1, select, -1);
+  MAX31855(255, select, 255);
 }
 
 
@@ -44,7 +44,7 @@ MAX31855::MAX31855(const uint8_t clock, const uint8_t select, const uint8_t miso
   _clock       = clock;
   _select      = select;
   _miso        = miso;
-  _hwSPI       = (clock == -1);
+  _hwSPI       = (clock == 255);
 
   _lastTimeRead = 0
   _offset       = 0;
