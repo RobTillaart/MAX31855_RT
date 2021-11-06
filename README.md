@@ -1,5 +1,7 @@
 
 [![Arduino CI](https://github.com/RobTillaart/MAX31855_RT/workflows/Arduino%20CI/badge.svg)](https://github.com/marketplace/actions/arduino_ci)
+[![Arduino-lint](https://github.com/RobTillaart/MAX31855_RT/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/RobTillaart/MAX31855_RT/actions/workflows/arduino-lint.yml)
+[![JSON check](https://github.com/RobTillaart/MAX31855_RT/actions/workflows/jsoncheck.yml/badge.svg)](https://github.com/RobTillaart/MAX31855_RT/actions/workflows/jsoncheck.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/MAX31855_RT/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/RobTillaart/MAX31855_RT.svg?maxAge=3600)](https://github.com/RobTillaart/MAX31855_RT/releases)
 
@@ -272,4 +274,9 @@ One can adjust the values to improve the accuracy of the temperature read.
 The **float getTemperature()** has implemented this algorithm, however as long
 as one does not set the Seebeck Coefficient it will use the K_TC as default.
 
+
+## Future
+
+- investigate other TC's 
+- 
 
