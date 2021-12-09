@@ -9,6 +9,7 @@
 //  HISTORY:
 //  0.4.0   2021-12-09  fix #21 breaking change for HW SPI
 //                      move constructor code to begin()
+//                      read() removed "premature" return on status.
 //  0.3.0   2021-08-11  VSPI / HSPI support for ESP32
 //                      add setGIOpins - ESP32 specific
 //                      add get/setSPIspeed() - all
@@ -133,7 +134,7 @@ uint8_t MAX31855::read()
   //      31  SIGN
   uint32_t value = _read();
 
-  if (value == 0xFFFFFFFF)  // needs a pull up on miso pin to work properly!
+  if (value == 0xFFFFFFFF)  // needs a pull up on MISO pin to work properly!
   {
     // bit 3 and bit 17 should always be 0 - P10 datasheet
     _status = STATUS_NO_COMMUNICATION;
@@ -142,12 +143,12 @@ uint8_t MAX31855::read()
 
   _lastTimeRead = millis();
 
-  // process status bit 0-2
+  //  process status bit 0-2
   _status = value & 0x0007;
-  if (_status != STATUS_OK)
-  {
-    return _status;
-  }
+  // if (_status != STATUS_OK)  // removed in 0.4.0 as internal can be valid.
+  // {
+  //   return _status;
+  // }
 
   value >>= 3;
 
