@@ -201,17 +201,19 @@ uint32_t MAX31855::_read(void)
   }
   else  // Software SPI
   {
-    uint16_t d1 = _swSPIdelay/2;
-    uint16_t d2 = _swSPIdelay - d1;
+    // split _swSPIdelay in equal dLow and dHigh
+    // dLow should be longer one when _swSPIdelay = odd.
+    uint16_t dHigh = _swSPIdelay/2;
+    uint16_t dLow = _swSPIdelay - dHigh;
     digitalWrite(_select, LOW);
     for (int8_t i = 31; i >= 0; i--)
     {
       _rawData <<= 1;
       digitalWrite(_clock, LOW);
-      if (d1 > 0) delayMicroseconds(d1);  // DUE
+      if (dLow > 0) delayMicroseconds(dLow);  // DUE might need 1 us
       if ( digitalRead(_miso) ) _rawData++;
       digitalWrite(_clock, HIGH);
-      if (d2 > 0) delayMicroseconds(d2);  // DUE
+      if (dHigh > 0) delayMicroseconds(dHigh);  // DUE
     }
     digitalWrite(_select, HIGH);
   }
