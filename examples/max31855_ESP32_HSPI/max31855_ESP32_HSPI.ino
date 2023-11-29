@@ -37,7 +37,7 @@ const int dataPin   = 12;
 const int clockPin  = 14;
 
 SPIClass * myspi = new SPIClass(HSPI);
-MAX31855 thermoCouple(selectPin, mySPI);
+MAX31855 thermoCouple(selectPin, myspi);
 //  MAX31855 thermoCouple(selectPin, dataPin, clockPin);  //  SW SPI to test
 
 uint32_t start, stop;
@@ -93,4 +93,3 @@ void loop()
 
 
 //  -- END OF FILE --
-
