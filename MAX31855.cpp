@@ -142,7 +142,7 @@ uint32_t MAX31855::_read(void)
     for (uint8_t i = 0; i < 4; i++)
     {
       _rawData <<= 8;
-      _rawData += mySPI->transfer(0);
+      _rawData += _mySPI->transfer(0);
     }
     digitalWrite(_select, HIGH);
     _mySPI->endTransaction();

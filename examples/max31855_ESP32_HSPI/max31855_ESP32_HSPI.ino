@@ -46,7 +46,7 @@ uint32_t start, stop;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println(__FILE__)
+  Serial.println(__FILE__);
   Serial.print("MAX31855_VERSION : ");
   Serial.println(MAX31855_VERSION);
   Serial.println();
